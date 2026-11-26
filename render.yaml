@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: upi-shield-backend
+    runtime: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: ALLOWED_ORIGINS
+        value: https://upi-shield-ai-three.vercel.app
