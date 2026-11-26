@@ -47,38 +47,17 @@ MAX_TEXT_LENGTH = 10000
 Image.MAX_IMAGE_PIXELS = 20_000_000
 
 RULES = [
-    # --- Secrets that no genuine company ever asks for ---
     (r"\b(otp|one[\s-]?time password)\b", 25, "The text mentions an OTP. Never share an OTP."),
-    (r"\b(upi\s*pin|payment\s*pin|mpin|atm\s*pin)\b", 30, "The text mentions a PIN. Never share your PIN."),
-    (r"\b(cvv|card\s*number|expiry date|net\s*banking (?:id|password)|password)\b", 25, "The text asks for card or banking details."),
-    (r"\b(aadhaar|aadhar|pan card|pan number)\b.{0,40}\b(update|verify|link|expire|block)", 15, "The message asks you to update or verify Aadhaar or PAN."),
-    # --- Pressure and fear ---
-    (r"\b(urgent|immediately|act now|right now|within \d+ (?:minutes|hours)|today only|last chance|turant)\b", 15, "The message uses urgency or pressure."),
-    (r"\b(blocked|suspended|deactivated|account closure|khata band)\b", 15, "The message mentions account restrictions."),
-    (r"\b(verify|verification|kyc|re-?kyc)\b", 10, "The message asks for verification or KYC."),
-    (r"\b(electricity|power|gas|sim|mobile number)\b.{0,50}\b(disconnect|cut|blocked|deactivat|expire)", 40, "The message threatens to cut a service unless you act."),
-    (r"\b(police|cbi|ed|customs|trai|cyber ?crime|narcotics)\b.{0,60}\b(arrest|case|warrant|parcel|fine|digital arrest)", 50, "The message claims an official body is taking action against you. Real agencies do not demand money by phone or chat."),
-    # --- Money tricks ---
-    (r"\b(prize|lottery|lucky draw|cashback|reward|refund|gift voucher)\b", 15, "The message mentions a prize, reward, cashback, or refund."),
-    (r"\b(receive|collect|get)\b.{0,40}\b(money|payment|cashback|refund)\b.{0,60}\b(pin|scan|approve|accept)\b", 25, "A request frames entering a PIN or scanning a code as a way to receive money. A PIN is only needed to send money."),
-    (r"\b(collect request|payment request|approve (?:the )?request|accept (?:the )?request)\b", 15, "The message asks you to approve a payment request."),
-    (r"\b(sent|transferred|paid)\b.{0,30}\b(by mistake|wrongly|wrong number)\b", 40, "The message says money was sent by mistake and asks for it back. This is a common trick."),
-    (r"\b(guaranteed returns?|double your money|risk[\s-]?free|daily profit|investment tips?|crypto (?:giveaway|investment))\b", 45, "The message promises guaranteed or very high returns."),
-    (r"\b(work from home|part[\s-]?time job|earn (?:rs\.?|inr|\u20b9)?\s?\d{3,}.{0,20}(?:day|daily|hour)|like (?:and|&) (?:share|subscribe).{0,20}earn|task[\s-]?based)\b", 35, "The message offers easy money for simple online tasks."),
-    (r"\b(pre[\s-]?approved loan|instant loan|loan (?:approved|offer)|processing fee|advance fee|registration fee)\b", 40, "The message offers a loan or asks for an upfront fee."),
-    (r"\b(parcel|courier|package|delivery)\b.{0,50}\b(held|failed|pending|customs|fee|charges|address)\b", 30, "The message mentions a held parcel or delivery fee."),
-    # --- Tools and links ---
-    (r"\b(anydesk|teamviewer|quicksupport|rustdesk|screen[\s-]?shar\w*|remote access)\b", 25, "The message mentions remote-access or screen-sharing tools."),
-    (r"\.apk\b|\b(install|download)\b.{0,30}\b(this app|apk|application)\b", 40, "The message asks you to install an app from outside the official app store."),
+    (r"\b(upi\s*pin|payment\s*pin)\b", 30, "The text mentions a UPI PIN. Never share your PIN."),
+    (r"\b(urgent|immediately|act now|right now)\b", 15, "The message uses urgency or pressure."),
+    (r"\b(blocked|suspended|account closure)\b", 15, "The message mentions account restrictions."),
+    (r"\b(verify|verification|kyc)\b", 10, "The message asks for verification or KYC."),
+    (r"\b(prize|lottery|cashback|reward|refund)\b", 15, "The message mentions a prize, reward, cashback, or refund."),
+    (r"\b(anydesk|teamviewer|screen sharing|remote access)\b", 25, "The message mentions remote-access or screen-sharing tools."),
     (r"https?://\S+|www\.\S+", 10, "The text contains a link. Verify its destination independently."),
     (r"https?://\d{1,3}(?:\.\d{1,3}){3}", 20, "A link uses a numeric IP address instead of a normal website name."),
     (r"http://", 10, "A link does not use HTTPS."),
-    (r"\b(bit\.ly|tinyurl\.com|cutt\.ly|rb\.gy|is\.gd|t\.co|goo\.gl|shorturl\.at|wa\.me)/\S+", 15, "A shortened link hides its real destination."),
-    (r"https?://[^\s/]*xn--", 20, "A link uses look-alike (punycode) characters in its domain."),
-    (r"https?://[^\s/]*(?:sbi|hdfc|icici|axis|paytm|phonepe|gpay|npci|upi|bank)[^\s/]*(?:-|\d)[^\s/]*\.(?:xyz|top|info|online|site|click|live|shop|vip|co|in\.net)", 25, "A link imitates a bank or payment app name on an unusual domain."),
-    (r"\b(customer (?:care|support)|helpline|toll[\s-]?free)\b.{0,40}\b(\+?91[\s-]?)?\d{10}\b", 20, "The message gives a phone number as customer care. Use the number on your card or official app instead."),
-    (r"\b(click|tap|open)\b.{0,15}\b(here|the link|link below)\b", 10, "The message pushes you to click a link."),
-    (r"\b(call|whatsapp|contact|dial)\b.{0,25}(?:\+?91[\s-]?)?[6-9]\d{9}\b", 15, "The message asks you to call or message a mobile number. Scammers often use personal numbers."),
+    (r"\b(receive|collect)\b.{0,40}\b(money|payment)\b.{0,60}\b(pin|scan|approve)\b", 20, "A request frames entering a PIN or scanning as a way to receive money."),
 ]
 
 
